@@ -16,7 +16,7 @@ ORTH_ACTIONS = [
 REWARDS = {
     'illegal': -10000,
     'normal': -1,
-    'collision': -10,
+    'collision': -1000,
     'goal': 10000
 }
 
@@ -130,12 +130,12 @@ class MARPOrth(object):
         rewards = {agent: REWARDS['normal'] for agent in self.agents}
         for i, agent in enumerate(self.agents):
             _a = actions[agent]
-            if not self.info_n[agent]['action_mask'][_a]:
-                _a = 'stop'
-                rewards[agent] = REWARDS['illegal']
-            elif self.terminations[agent]:
+            if self.terminations[agent]:
                 _a = 'stop'
                 rewards[agent] = REWARDS['goal']
+            elif not self.info_n[agent]['action_mask'][_a]:
+                _a = 'stop'
+                rewards[agent] = REWARDS['illegal']
             succ_locations.append(move(self.locations[i], _a))
 
         collisions = check_collision(self.locations, succ_locations)
