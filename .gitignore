@@ -28,8 +28,11 @@ __pycache__/
 *.mov
 
 *.mp4
+!figs/*.mp4
 
 *.gif
+!figs/*.gif
+
 
 commands*
 
