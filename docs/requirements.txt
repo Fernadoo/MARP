@@ -3,3 +3,12 @@ sphinx
 sphinx-autobuild
 sphinx_github_changelog
 myst-parser
+
+chex==0.1.84
+numpy==1.26.2
+pettingzoo==1.24.1
+stable_baselines3==2.1.0
+SuperSuit==3.9.0
+torch==2.1.1
+
+pygame
