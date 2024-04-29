@@ -123,7 +123,7 @@ class Animation:
     def save(self, file_name, speed):
         self.animation.save(
             file_name,
-            # fps=FPS * speed,
+            fps=self.FPS * speed,
             dpi=200,
             savefig_kwargs={"pad_inches": 0})  # "bbox_inches": "tight"
 

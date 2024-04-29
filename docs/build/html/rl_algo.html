@@ -1,0 +1,685 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Search" href="search_algo.html" /><link rel="prev" title="Basic Usage" href="base_env.html" />
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.01.29 -->
+        <title>Reinforcement Learning - MARP 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">MARP 0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">MARP 0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base_env.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Formulations</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_algo.html">Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oppo_model_algo.html">Opponent Modelling</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Benchmarks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mapf.html">MAPF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapd.html">MAPD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warehouse.html">Warehouse</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/marp.ma_env.html">marp.ma_env</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/marp.marp_orth.html">marp.marp_orth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/marp.marp_spin.html">marp.marp_spin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/marp.search.html">marp.search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/marp.utils.html">marp.utils</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="reinforcement-learning">
+<span id="module-marp.rl"></span><h1>Reinforcement Learning<a class="headerlink" href="#reinforcement-learning" title="Link to this heading">¶</a></h1>
+<p>As we provide standard RL-like interfaces, one can implement any RL algorithm on top of it in a neat manner.
+Before algorithm implementation, it should be noted what problem is to be solved.
+To formulate desired problems,
+we follow the <a class="reference internal" href="base_env.html#formulation"><span class="std std-ref">Formulation as Wrappers</span></a> principle by encoding appropriate wrappers.</p>
+<section id="tabular-rl">
+<h2>Tabular RL<a class="headerlink" href="#tabular-rl" title="Link to this heading">¶</a></h2>
+<section id="single-agent-q-learning">
+<h3>Single-Agent Q Learning<a class="headerlink" href="#single-agent-q-learning" title="Link to this heading">¶</a></h3>
+<p>Given a particular agent and the multi-agent environment, a single-agent RL problem can be induced.
+One can simply assume the others are not moving and compute an optimal policy for that particular agent.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">marp.rl</span> <span class="kn">import</span> <span class="n">SingleAgentLearningWrapper</span><span class="p">,</span> <span class="n">Qlearning</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">ctrl_agent</span> <span class="o">=</span> <span class="s1">&#39;robot_1&#39;</span>
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">SingleAgentLearningWrapper</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">ctrl_agent</span><span class="p">)</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">Qlearning</span><span class="p">(</span><span class="n">training_env</span><span class="p">)</span>
+
+<span class="n">observations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">policy</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">ctrl_agent</span><span class="p">])]</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">ctrl_agent</span><span class="p">])</span> <span class="ow">in</span> <span class="n">policy</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">agent</span><span class="p">:</span> <span class="n">a</span> <span class="k">if</span> <span class="n">agent</span> <span class="o">==</span> <span class="n">ctrl_agent</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span>
+    <span class="p">}</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code has basically done the following things:</p>
+<ol class="arabic simple">
+<li><p>Formulate a single-agent RL problem from <code class="docutils literal notranslate"><span class="pre">robot_1</span></code>’s perspective by the wrapper <a class="reference internal" href="#marp.rl.SingleAgentLearningWrapper" title="marp.rl.SingleAgentLearningWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleAgentLearningWrapper</span></code></a>.</p></li>
+<li><p>Call <a class="reference internal" href="#marp.rl.Qlearning" title="marp.rl.Qlearning"><code class="xref py py-func docutils literal notranslate"><span class="pre">Qlearning()</span></code></a> to compute a policy.</p></li>
+<li><p>Execute the policy.</p></li>
+</ol>
+<p>One will probably get similar visual results as follows. Note that we simple assume all other agents stay put.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/satql.gif"><img alt="_images/satql.gif" src="_images/satql.gif" style="width: 300.0px; height: 300.0px;" /></a>
+</figure>
+</section>
+<section id="multi-agent-joint-q-learning">
+<h3>Multi-Agent Joint Q Learning<a class="headerlink" href="#multi-agent-joint-q-learning" title="Link to this heading">¶</a></h3>
+<p>One can also view all agents as a joint one,
+to find an optimal policy for the joint agent is
+to find a policy for each agent as if they are all under centralized control.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">marp.rl</span> <span class="kn">import</span> <span class="n">MultiAgentJointLearningWrapper</span><span class="p">,</span> <span class="n">Qlearning</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">MultiAgentJointLearningWrapper</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+<span class="n">ja</span> <span class="o">=</span> <span class="n">training_env</span><span class="o">.</span><span class="n">joint_actions</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">Qlearning</span><span class="p">(</span><span class="n">training_env</span><span class="p">,</span> <span class="n">num_it</span><span class="o">=</span><span class="mf">3e4</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">observations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">policy</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">]])]</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="ow">in</span> <span class="n">policy</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">ja</span><span class="p">[</span><span class="n">a</span><span class="p">]))</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code has basically done the following things:</p>
+<ol class="arabic simple">
+<li><p>Formulate a multi-agent joint learning problem by the wrapper <a class="reference internal" href="#marp.rl.MultiAgentJointLearningWrapper" title="marp.rl.MultiAgentJointLearningWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAgentJointLearningWrapper</span></code></a>.</p></li>
+<li><p>Again, call <a class="reference internal" href="#marp.rl.Qlearning" title="marp.rl.Qlearning"><code class="xref py py-func docutils literal notranslate"><span class="pre">Qlearning()</span></code></a> to compute a (joint) policy, since we are still dealing with one (joint) agent.</p></li>
+<li><p>Execute the policy.</p></li>
+</ol>
+<p>One will probably get similar visual results as follows. Note that this time <a class="reference internal" href="#marp.rl.Qlearning" title="marp.rl.Qlearning"><code class="xref py py-func docutils literal notranslate"><span class="pre">Qlearning()</span></code></a> operates over joint state space and joint action space with certain aggregated rewards, and therefore, may not perform well if it is not trained for enough iterations.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/majql.gif"><img alt="_images/majql.gif" src="_images/majql.gif" style="width: 300.0px; height: 300.0px;" /></a>
+</figure>
+</section>
+<section id="multi-agent-individual-q-learning">
+<h3>Multi-Agent Individual Q Learning<a class="headerlink" href="#multi-agent-individual-q-learning" title="Link to this heading">¶</a></h3>
+<p>To achive centralized control,
+one can alternatively view each agent as an autonomous entity interacting with others.
+Each of them learns am individual policy even if the interaction is non-stationary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">marp.rl</span> <span class="kn">import</span> <span class="n">individualQlearning</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">policies</span> <span class="o">=</span> <span class="n">individualQlearning</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">num_it</span><span class="o">=</span><span class="mf">5e4</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">observations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">agent</span><span class="p">])</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">policies</span><span class="p">[</span><span class="n">agent</span><span class="p">]:</span>
+            <span class="n">actions</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">actions</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">policies</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">agent</span><span class="p">])]</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code has basically done the following things:</p>
+<ol class="arabic simple">
+<li><p>Just take the raw multi-agent environment.</p></li>
+<li><p>Instead, call <a class="reference internal" href="#marp.rl.individualQlearning" title="marp.rl.individualQlearning"><code class="xref py py-func docutils literal notranslate"><span class="pre">individualQlearning()</span></code></a> to compute individual policies for each agent.</p></li>
+<li><p>Execute the policy profile.</p></li>
+</ol>
+<p>Note that for each agent, her policy is a mapping from possible joint states to her own actions.
+One will probably get similar visual results as follows.
+As shown, agent 2 took greedy moves at first but then make a detour to avoid collision with agent 1.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/maiql.gif"><img alt="_images/maiql.gif" src="_images/maiql.gif" style="width: 300.0px; height: 300.0px;" /></a>
+</figure>
+</section>
+</section>
+<section id="deep-rl">
+<h2>Deep RL<a class="headerlink" href="#deep-rl" title="Link to this heading">¶</a></h2>
+<p>In addition to conventional tabular RL implementations, one can also take one step further by
+integrating existing deep RL algorithms, e.g., DQN, A2C, and PPO.</p>
+<p>We hereby also provide a tutorial by using
+<a class="reference external" href="https://github.com/DLR-RM/stable-baselines3">Stable Baselines3</a>
+as a pool of Deep RL algorithms,
+and <a class="reference external" href="https://github.com/Farama-Foundation/SuperSuit">SuperSuit</a>
+as useful environment wrappers for parallel training.</p>
+<section id="single-agent-drl">
+<h3>Single-Agent DRL<a class="headerlink" href="#single-agent-drl" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">supersuit</span> <span class="k">as</span> <span class="nn">ss</span>
+<span class="kn">from</span> <span class="nn">stable_baselines3</span> <span class="kn">import</span> <span class="n">DQN</span>
+
+<span class="kn">from</span> <span class="nn">marp.rl</span> <span class="kn">import</span> <span class="n">SingleAgentLearningWrapper</span>
+
+<span class="n">alg</span> <span class="o">=</span> <span class="n">DQN</span>
+<span class="n">policy_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;net_arch&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="s1">&#39;robot_0&#39;</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">SingleAgentLearningWrapper</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">agent</span><span class="p">)</span>
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">stable_baselines3_vec_env_v0</span><span class="p">(</span><span class="n">training_env</span><span class="p">,</span> <span class="n">num_envs</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">training_env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">alg</span><span class="p">(</span><span class="s2">&quot;MlpPolicy&quot;</span><span class="p">,</span> <span class="n">training_env</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">exploration_fraction</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+            <span class="n">policy_kwargs</span><span class="o">=</span><span class="n">policy_kwargs</span><span class="p">,</span>
+            <span class="n">tensorboard_log</span><span class="o">=</span><span class="s2">&quot;runs&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">2.5e6</span><span class="p">),</span>
+            <span class="n">tb_log_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">-%H%M%S&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pretrained/singleDQN_</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pretrained/singleDQN_</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s2">.zip&quot;</span><span class="p">)</span>
+<span class="n">observations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;robot_0&#39;</span><span class="p">:</span> <span class="n">policy</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="s1">&#39;robot_0&#39;</span><span class="p">],</span> <span class="n">deterministic</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="n">actions</span><span class="p">[</span><span class="s1">&#39;robot_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">actions</span><span class="p">[</span><span class="s1">&#39;robot_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="multi-agent-joint-learning">
+<h3>Multi-Agent Joint Learning<a class="headerlink" href="#multi-agent-joint-learning" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">supersuit</span> <span class="k">as</span> <span class="nn">ss</span>
+<span class="kn">from</span> <span class="nn">stable_baselines3</span> <span class="kn">import</span> <span class="n">PPO</span>
+
+<span class="kn">from</span> <span class="nn">marp.rl</span> <span class="kn">import</span> <span class="n">MultiAgentJointLearningWrapper</span>
+
+<span class="n">alg</span> <span class="o">=</span> <span class="n">PPO</span>
+<span class="n">policy_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;net_arch&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">pi</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="n">vf</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">]),</span>
+<span class="p">}</span>
+
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">MultiAgentJointLearningWrapper</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+<span class="n">ja</span> <span class="o">=</span> <span class="n">training_env</span><span class="o">.</span><span class="n">joint_actions</span>
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">stable_baselines3_vec_env_v0</span><span class="p">(</span><span class="n">training_env</span><span class="p">,</span> <span class="n">num_envs</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">training_env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">alg</span><span class="p">(</span><span class="s2">&quot;MlpPolicy&quot;</span><span class="p">,</span> <span class="n">training_env</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+            <span class="n">policy_kwargs</span><span class="o">=</span><span class="n">policy_kwargs</span><span class="p">,</span>
+            <span class="n">tensorboard_log</span><span class="o">=</span><span class="s2">&quot;runs&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">10e6</span><span class="p">),</span>
+            <span class="n">tb_log_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">-%H%M%S&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;pretrained/jointPPO&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;pretrained/jointPPO.zip&quot;</span><span class="p">)</span>
+<span class="n">observations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="n">ja</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">actions</span><span class="p">))</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="multi-agent-individual-learning">
+<h3>Multi-Agent Individual Learning<a class="headerlink" href="#multi-agent-individual-learning" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">supersuit</span> <span class="k">as</span> <span class="nn">ss</span>
+<span class="kn">from</span> <span class="nn">stable_baselines3</span> <span class="kn">import</span> <span class="n">A2C</span>
+
+<span class="n">alg</span> <span class="o">=</span> <span class="n">A2C</span>
+
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">pettingzoo_env_to_vec_env_v1</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+<span class="n">training_env</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">concat_vec_envs_v1</span><span class="p">(</span><span class="n">training_env</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">num_cpus</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">base_class</span><span class="o">=</span><span class="s2">&quot;stable_baselines3&quot;</span><span class="p">)</span>
+
+<span class="n">training_env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">alg</span><span class="p">(</span><span class="s2">&quot;MlpPolicy&quot;</span><span class="p">,</span> <span class="n">training_env</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">tensorboard_log</span><span class="o">=</span><span class="s2">&quot;runs&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">8e6</span><span class="p">),</span>
+            <span class="n">tb_log_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">-%H%M%S&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;pretrained/indiA2C&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;pretrained/indiA2C.zip&quot;</span><span class="p">)</span>
+<span class="n">observations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">agent</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">observations</span><span class="p">[</span><span class="n">agent</span><span class="p">],</span> <span class="n">deterministic</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span>
+    <span class="p">}</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="detailed-usage">
+<h2>Detailed Usage<a class="headerlink" href="#detailed-usage" title="Link to this heading">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="marp.rl.Qlearning">
+<span class="sig-prename descclassname"><span class="pre">marp.rl.</span></span><span class="sig-name descname"><span class="pre">Qlearning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_it</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.Qlearning" title="Link to this definition">¶</a></dt>
+<dd><p>Tabular Q learning</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> (<em>RLEnv</em>) – a single/joint-agent RL environment</p></li>
+<li><p><strong>num_it</strong> (<em>int</em><em> or </em><em>float</em>) – the number of learning iterations</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em>) – the initial exploration rate,
+will linearly decay to 0.1 in the first half of iterations</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – learning rate</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – discount factor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>policy</strong> (<em>dict</em>) – the learned policy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="marp.rl.individualQlearning">
+<span class="sig-prename descclassname"><span class="pre">marp.rl.</span></span><span class="sig-name descname"><span class="pre">individualQlearning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_it</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.individualQlearning" title="Link to this definition">¶</a></dt>
+<dd><p>Tabular Q learning for multiple individual learners</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> (<em>MARLEnv</em>) – a multi-agent RL environment</p></li>
+<li><p><strong>num_it</strong> (<em>int</em><em> or </em><em>float</em>) – the number of learning iterations</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em>) – the initial exploration rate,
+will linearly decay to 0.1 in the first half of iterations</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – learning rate</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – discount factor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>policies</strong> (<em>dict[str, dict]</em>) – a policy profile</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="marp.rl.SingleAgentLearningWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">marp.rl.</span></span><span class="sig-name descname"><span class="pre">SingleAgentLearningWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ma_env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.SingleAgentLearningWrapper" title="Link to this definition">¶</a></dt>
+<dd><p>Formulate a single agent learning problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ma_env</strong> (<a class="reference internal" href="base_env.html#marp.ma_env.MARP" title="marp.ma_env.MARP"><em>MARP</em></a>) – an intialized multi-agent environment</p></li>
+<li><p><strong>agent</strong> (<em>str</em>) – the agent the the problem is induced for</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="marp.rl.SingleAgentLearningWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.SingleAgentLearningWrapper.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset the location of the agent</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marp.rl.SingleAgentLearningWrapper.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.SingleAgentLearningWrapper.step" title="Link to this definition">¶</a></dt>
+<dd><p>Proceed to the next step by the given action</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>Action</em>) – the next action</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>obs</strong> (<em>dict</em>) – local observation</p></li>
+<li><p><strong>reward</strong> (<em>float</em>) – reward</p></li>
+<li><p><strong>termination</strong> (<em>bool</em>) – whether the episode terminates</p></li>
+<li><p><strong>truncation</strong> (<em>bool</em>) – whether the maximum number of steps is exceeded</p></li>
+<li><p><strong>info</strong> (<em>dict</em>) – auxiliary infomation including collision situations and action masks</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="marp.rl.MultiAgentJointLearningWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">marp.rl.</span></span><span class="sig-name descname"><span class="pre">MultiAgentJointLearningWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ma_env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.MultiAgentJointLearningWrapper" title="Link to this definition">¶</a></dt>
+<dd><p>Formulate a multi-agent joint learning problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ma_env</strong> (<a class="reference internal" href="base_env.html#marp.ma_env.MARP" title="marp.ma_env.MARP"><em>MARP</em></a>) – an intialized multi-agent environment</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="marp.rl.MultiAgentJointLearningWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.MultiAgentJointLearningWrapper.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset the locations of agents</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marp.rl.MultiAgentJointLearningWrapper.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#marp.rl.MultiAgentJointLearningWrapper.step" title="Link to this definition">¶</a></dt>
+<dd><p>Proceed to the next step by the given joint action</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>Action</em>) – the next joint action</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>obs</strong> (<em>dict</em>) – joint observations</p></li>
+<li><p><strong>reward</strong> (<em>float</em>) – aggregated reward by simple summation</p></li>
+<li><p><strong>termination</strong> (<em>bool</em>) – whether the episode terminates for all agents</p></li>
+<li><p><strong>truncation</strong> (<em>bool</em>) – whether the maximum number of steps is exceeded</p></li>
+<li><p><strong>info</strong> (<em>dict</em>) – auxiliary infomation including collision situations and action masks</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="search_algo.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Search</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="base_env.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Basic Usage</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Fengming (Fernando) Zhu
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Reinforcement Learning</a><ul>
+<li><a class="reference internal" href="#tabular-rl">Tabular RL</a><ul>
+<li><a class="reference internal" href="#single-agent-q-learning">Single-Agent Q Learning</a></li>
+<li><a class="reference internal" href="#multi-agent-joint-q-learning">Multi-Agent Joint Q Learning</a></li>
+<li><a class="reference internal" href="#multi-agent-individual-q-learning">Multi-Agent Individual Q Learning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deep-rl">Deep RL</a><ul>
+<li><a class="reference internal" href="#single-agent-drl">Single-Agent DRL</a></li>
+<li><a class="reference internal" href="#multi-agent-joint-learning">Multi-Agent Joint Learning</a></li>
+<li><a class="reference internal" href="#multi-agent-individual-learning">Multi-Agent Individual Learning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#detailed-usage">Detailed Usage</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#marp.rl.Qlearning"><code class="docutils literal notranslate"><span class="pre">Qlearning()</span></code></a></li>
+<li><a class="reference internal" href="#marp.rl.individualQlearning"><code class="docutils literal notranslate"><span class="pre">individualQlearning()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#marp.rl.SingleAgentLearningWrapper"><code class="docutils literal notranslate"><span class="pre">SingleAgentLearningWrapper</span></code></a><ul>
+<li><a class="reference internal" href="#marp.rl.SingleAgentLearningWrapper.reset"><code class="docutils literal notranslate"><span class="pre">SingleAgentLearningWrapper.reset()</span></code></a></li>
+<li><a class="reference internal" href="#marp.rl.SingleAgentLearningWrapper.step"><code class="docutils literal notranslate"><span class="pre">SingleAgentLearningWrapper.step()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#marp.rl.MultiAgentJointLearningWrapper"><code class="docutils literal notranslate"><span class="pre">MultiAgentJointLearningWrapper</span></code></a><ul>
+<li><a class="reference internal" href="#marp.rl.MultiAgentJointLearningWrapper.reset"><code class="docutils literal notranslate"><span class="pre">MultiAgentJointLearningWrapper.reset()</span></code></a></li>
+<li><a class="reference internal" href="#marp.rl.MultiAgentJointLearningWrapper.step"><code class="docutils literal notranslate"><span class="pre">MultiAgentJointLearningWrapper.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>

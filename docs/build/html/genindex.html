@@ -154,7 +154,20 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base_env.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Formulations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rl_algo.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_algo.html">Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oppo_model_algo.html">Opponent Modelling</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Benchmarks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mapf.html">MAPF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapd.html">MAPD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warehouse.html">Warehouse</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -199,28 +212,62 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage.html#marp.search.astar">astar() (in module marp.search)</a>
+        <li><a href="search_algo.html#marp.search.astar">astar() (in module marp.search)</a>
 </li>
     </ul></td>
   </tr></table>
 </section>
 
-<section id="L" class="genindex-section">
-  <h2>L</h2>
+<section id="G" class="genindex-section">
+  <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage.html#marp.search.lumache.get_random_ingredients">lumache.get_random_ingredients() (in module marp.search)</a>
+        <li><a href="base_env.html#marp.ma_env.MARP.get_state">get_state() (marp.ma_env.MARP method)</a>
+
+        <ul>
+          <li><a href="search_algo.html#marp.search.MultiAgentSearchWrapper.get_state">(marp.search.MultiAgentSearchWrapper method)</a>
 </li>
+          <li><a href="search_algo.html#marp.search.SingleAgentSearchWrapper.get_state">(marp.search.SingleAgentSearchWrapper method)</a>
+</li>
+        </ul></li>
     </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage.html#marp.search.lumache.InvalidKindError">lumache.InvalidKindError</a>
+        <li><a href="search_algo.html#marp.search.MultiAgentSearchWrapper.heuristic">heuristic() (marp.search.MultiAgentSearchWrapper method)</a>
+
+        <ul>
+          <li><a href="search_algo.html#marp.search.SingleAgentSearchWrapper.heuristic">(marp.search.SingleAgentSearchWrapper method)</a>
 </li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="rl_algo.html#marp.rl.individualQlearning">individualQlearning() (in module marp.rl)</a>
+</li>
+        <li><a href="base_env.html#marp.ma_env.MARP.is_goal_state">is_goal_state() (marp.ma_env.MARP method)</a>
+
+        <ul>
+          <li><a href="search_algo.html#marp.search.MultiAgentSearchWrapper.is_goal_state">(marp.search.MultiAgentSearchWrapper method)</a>
+</li>
+          <li><a href="search_algo.html#marp.search.SingleAgentSearchWrapper.is_goal_state">(marp.search.SingleAgentSearchWrapper method)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -229,6 +276,8 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="base_env.html#marp.ma_env.MARP">MARP (class in marp.ma_env)</a>
+</li>
         <li>
     marp.ma_env
 
@@ -251,10 +300,17 @@
 </li>
         </ul></li>
         <li>
+    marp.rl
+
+        <ul>
+          <li><a href="rl_algo.html#module-marp.rl">module</a>
+</li>
+        </ul></li>
+        <li>
     marp.search
 
         <ul>
-          <li><a href="generated/marp.search.html#module-marp.search">module</a>, <a href="usage.html#module-marp.search">[1]</a>
+          <li><a href="generated/marp.search.html#module-marp.search">module</a>, <a href="search_algo.html#module-marp.search">[1]</a>
 </li>
         </ul></li>
     </ul></td>
@@ -276,9 +332,83 @@
 </li>
           <li><a href="generated/marp.marp_spin.html#module-marp.marp_spin">marp.marp_spin</a>
 </li>
-          <li><a href="generated/marp.search.html#module-marp.search">marp.search</a>, <a href="usage.html#module-marp.search">[1]</a>
+          <li><a href="rl_algo.html#module-marp.rl">marp.rl</a>
+</li>
+          <li><a href="generated/marp.search.html#module-marp.search">marp.search</a>, <a href="search_algo.html#module-marp.search">[1]</a>
 </li>
           <li><a href="generated/marp.utils.html#module-marp.utils">marp.utils</a>
+</li>
+        </ul></li>
+        <li><a href="rl_algo.html#marp.rl.MultiAgentJointLearningWrapper">MultiAgentJointLearningWrapper (class in marp.rl)</a>
+</li>
+        <li><a href="search_algo.html#marp.search.MultiAgentSearchWrapper">MultiAgentSearchWrapper (class in marp.search)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="rl_algo.html#marp.rl.Qlearning">Qlearning() (in module marp.rl)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="base_env.html#marp.ma_env.MARP.render">render() (marp.ma_env.MARP method)</a>
+</li>
+        <li><a href="base_env.html#marp.ma_env.MARP.reset">reset() (marp.ma_env.MARP method)</a>
+
+        <ul>
+          <li><a href="rl_algo.html#marp.rl.MultiAgentJointLearningWrapper.reset">(marp.rl.MultiAgentJointLearningWrapper method)</a>
+</li>
+          <li><a href="rl_algo.html#marp.rl.SingleAgentLearningWrapper.reset">(marp.rl.SingleAgentLearningWrapper method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="base_env.html#marp.ma_env.MARP.save">save() (marp.ma_env.MARP method)</a>
+</li>
+        <li><a href="rl_algo.html#marp.rl.SingleAgentLearningWrapper">SingleAgentLearningWrapper (class in marp.rl)</a>
+</li>
+        <li><a href="search_algo.html#marp.search.SingleAgentSearchWrapper">SingleAgentSearchWrapper (class in marp.search)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="base_env.html#marp.ma_env.MARP.step">step() (marp.ma_env.MARP method)</a>
+
+        <ul>
+          <li><a href="rl_algo.html#marp.rl.MultiAgentJointLearningWrapper.step">(marp.rl.MultiAgentJointLearningWrapper method)</a>
+</li>
+          <li><a href="rl_algo.html#marp.rl.SingleAgentLearningWrapper.step">(marp.rl.SingleAgentLearningWrapper method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="base_env.html#marp.ma_env.MARP.transit">transit() (marp.ma_env.MARP method)</a>
+
+        <ul>
+          <li><a href="search_algo.html#marp.search.MultiAgentSearchWrapper.transit">(marp.search.MultiAgentSearchWrapper method)</a>
+</li>
+          <li><a href="search_algo.html#marp.search.SingleAgentSearchWrapper.transit">(marp.search.SingleAgentSearchWrapper method)</a>
 </li>
         </ul></li>
     </ul></td>

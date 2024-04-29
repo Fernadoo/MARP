@@ -1,10 +1,6 @@
-Introduction
-===========
-
-
 
 Quick Start
------------
+===========
 
 Initializing environments in MARP is very similar to
 doing that in `PettingZoo <https://pettingzoo.farama.org/>`_ and `Gym <https://gymnasium.farama.org/>`_.

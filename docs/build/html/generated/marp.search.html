@@ -154,9 +154,24 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base_env.html">Basic Usage</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Formulations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../rl_algo.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../search_algo.html">Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../oppo_model_algo.html">Opponent Modelling</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Benchmarks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mapf.html">MAPF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mapd.html">MAPD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../warehouse.html">Warehouse</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="marp.ma_env.html">marp.ma_env</a></li>
 <li class="toctree-l1"><a class="reference internal" href="marp.marp_orth.html">marp.marp_orth</a></li>
@@ -203,8 +218,8 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../usage.html#marp.search.astar" title="marp.search.astar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">astar</span></code></a>(sa_env)</p></td>
-<td><p>Given a single agent search environment, return the optimal plan.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../search_algo.html#marp.search.astar" title="marp.search.astar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">astar</span></code></a>(env)</p></td>
+<td><p>Given a search environment, return the optimal plan.</p></td>
 </tr>
 </tbody>
 </table>
@@ -213,8 +228,11 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleAgentSearchWrapper</span></code>(ma_env, agent)</p></td>
-<td><p>docstring for SingleAgentSearchWrapper</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../search_algo.html#marp.search.MultiAgentSearchWrapper" title="marp.search.MultiAgentSearchWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiAgentSearchWrapper</span></code></a>(ma_env)</p></td>
+<td><p>Given a MARP environment, wrap it as a multi-agent joint search problem.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../search_algo.html#marp.search.SingleAgentSearchWrapper" title="marp.search.SingleAgentSearchWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleAgentSearchWrapper</span></code></a>(ma_env, agent)</p></td>
+<td><p>Given a MARP environment, wrap it as inducing a single-agent search problem.</p></td>
 </tr>
 </tbody>
 </table>

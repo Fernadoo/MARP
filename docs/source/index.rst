@@ -28,16 +28,25 @@ Contents
    :caption: User guide
 
    quick_start
+   base_env
+   
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Formulations
+   
+   rl_algo
+   search_algo
+   oppo_model_algo
 
 
 .. toctree::
    :maxdepth: 1
-   :caption: Algorithms
+   :caption: Benchmarks
    
-   search_algo
-   rl_algo
-
-
+   mapf
+   mapd
+   warehouse
 
 
 API

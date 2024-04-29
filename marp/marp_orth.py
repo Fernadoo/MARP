@@ -179,16 +179,21 @@ class MARPOrth(object):
             paths = []
             for step in self.history['paths']:
                 paths.append(step)
-            animator = Animation(range(self.N),
-                                 self.layout,
-                                 self.starts,
-                                 self.goals,
-                                 paths,
-                                 FPS=60)
-            animator.show()
+            self.animator = Animation(
+                range(self.N),
+                self.layout,
+                self.starts,
+                self.goals,
+                paths,
+                FPS=60
+            )
+            self.animator.show()
         else:
             for step in self.history['paths']:
                 print(step)
+
+    def _save(self, filename, speed=1):
+        self.animator.save(f"figs/{filename}", speed)
 
     def _get_state(self):
         # summarize the information state

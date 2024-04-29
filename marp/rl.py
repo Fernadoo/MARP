@@ -10,7 +10,14 @@ from tqdm import tqdm
 
 
 class SingleAgentLearningWrapper(Env):
-    """docstring for SingleAgentLearningWrapper"""
+    """
+    Formulate a single agent learning problem
+
+    Args:
+        ma_env (MARP): an intialized multi-agent environment
+        agent (str): the agent the the problem is induced for
+    """
+
     metadata = {
         'name': 'MA-Single-RL'
     }
@@ -22,10 +29,26 @@ class SingleAgentLearningWrapper(Env):
         self.observation_space = self.ma_env.observation_space(agent)
 
     def reset(self, seed=None, options=None):
+        """
+        Reset the location of the agent
+        """
         obs_n, info_n = self.ma_env.reset()
         return obs_n[self.agent], info_n[self.agent]
 
     def step(self, action):
+        """
+        Proceed to the next step by the given action
+
+        Args:
+            action (Action): the next action
+
+        Returns:
+            obs (dict): local observation
+            reward (float): reward
+            termination (bool): whether the episode terminates
+            truncation (bool): whether the maximum number of steps is exceeded
+            info (dict): auxiliary infomation including collision situations and action masks
+        """
         fake_actions = {
             agent: 0 if agent != self.agent else action
             for agent in self.ma_env.agents
@@ -41,7 +64,13 @@ class SingleAgentLearningWrapper(Env):
 
 
 class MultiAgentJointLearningWrapper(Env):
-    """docstring for MultiAgentJointLearning"""
+    """
+    Formulate a multi-agent joint learning problem
+
+    Args:
+        ma_env (MARP): an intialized multi-agent environment
+    """
+
     metadata = {
         'name': 'MA-Joint-RL'
     }
@@ -58,11 +87,27 @@ class MultiAgentJointLearningWrapper(Env):
         self.observation_space = self.ma_env.observation_space(self.agents[0])
 
     def reset(self, seed=None, options=None):
+        """
+        Reset the locations of agents
+        """
         obs_n, info_n = self.ma_env.reset()
         obs = obs_n[self.agents[0]]
         return obs, info_n
 
     def step(self, action):
+        """
+        Proceed to the next step by the given joint action
+
+        Args:
+            action (Action): the next joint action
+
+        Returns:
+            obs (dict): joint observations
+            reward (float): aggregated reward by simple summation
+            termination (bool): whether the episode terminates for all agents
+            truncation (bool): whether the maximum number of steps is exceeded
+            info (dict): auxiliary infomation including collision situations and action masks
+        """
         action = self.joint_actions[action]
         ja = dict(zip(self.agents, action))
         obs_n, r_n, term_n, trunc_n, info_n = self.ma_env.step(ja)
@@ -83,6 +128,20 @@ def MultiAgentIndividualLearningWrapper(ma_env):
 
 
 def Qlearning(env, num_it=1e3, epsilon=0.5, alpha=0.3, gamma=0.9):
+    """
+    Tabular Q learning
+
+    Args:
+        env (RLEnv): a single/joint-agent RL environment
+        num_it (int or float): the number of learning iterations
+        epsilon (float): the initial exploration rate,
+            will linearly decay to 0.1 in the first half of iterations
+        alpha (float): learning rate
+        gamma (float): discount factor
+
+    Returns:
+        policy (dict): the learned policy
+    """
     Qs = {}
     for i in tqdm(range(int(num_it))):
         ep = max((epsilon - 0.1) * (0.5 * num_it - i) / num_it, 0) + 0.1
@@ -114,6 +173,20 @@ def Qlearning(env, num_it=1e3, epsilon=0.5, alpha=0.3, gamma=0.9):
 
 
 def individualQlearning(env, num_it=1e3, epsilon=0.5, alpha=0.3, gamma=0.9):
+    """
+    Tabular Q learning for multiple individual learners
+
+    Args:
+        env (MARLEnv): a multi-agent RL environment
+        num_it (int or float): the number of learning iterations
+        epsilon (float): the initial exploration rate,
+            will linearly decay to 0.1 in the first half of iterations
+        alpha (float): learning rate
+        gamma (float): discount factor
+
+    Returns:
+        policies (dict[str, dict]): a policy profile
+    """
     Qs = {agent: {} for agent in env.agents}
     for i in tqdm(range(int(num_it))):
         ep = max((epsilon - 0.1) * (0.5 * num_it - i) / num_it, 0) + 0.1

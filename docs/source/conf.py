@@ -24,11 +24,17 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    "sphinx.ext.napoleon",
 ]
 
 templates_path = ['_templates']
 exclude_patterns = []
 
+# Napoleon settings
+napoleon_use_ivar = True
+napoleon_use_admonition_for_references = True
+# See https://github.com/sphinx-doc/sphinx/issues/9119
+napoleon_custom_sections = [("Returns", "params_style")]
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -36,4 +42,5 @@ exclude_patterns = []
 
 # html_theme = 'alabaster'
 html_theme = 'furo'
+# html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
