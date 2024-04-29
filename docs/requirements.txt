@@ -12,3 +12,5 @@ SuperSuit==3.9.0
 torch==2.1.1
 
 pygame
+tqdm
+pillow
