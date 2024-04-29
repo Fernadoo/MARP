@@ -1,1 +1,5 @@
 furo
+sphinx
+sphinx-autobuild
+sphinx_github_changelog
+myst-parser
