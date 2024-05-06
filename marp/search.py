@@ -74,6 +74,20 @@ class SingleAgentSearchWrapper():
         return np.sqrt(np.sum(np.square(np.array(loc) - np.array(goal))))
 
 
+class SingleAgentLifelongSearchWrapper(SingleAgentSearchWrapper):
+    """docstring for SingleAgentSearchWrapper"""
+
+    def heuristic(self, state):
+        loc = state['locations'][self.i]
+        next_goal_index = state['next_goals'][self.agent]
+        dist = 0
+        for g in range(next_goal_index, len(state['goals'][self.i])):
+            goal = state['goals'][self.i][g]
+            dist += np.sqrt(np.sum(np.square(np.array(loc) - np.array(goal))))
+            loc = goal
+        return dist
+
+
 class MultiAgentSearchWrapper():
     """
     Given a MARP environment, wrap it as a multi-agent joint search problem.

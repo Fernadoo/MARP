@@ -19,11 +19,19 @@ class MARP(ParallelEnv):
         "name": "multiagent_route_planning_v0",
     }
 
-    def __init__(self, N=2, layout='small', orthogonal_actions=True, one_shot=True, render_mode=None):
+    def __init__(self, N=2, layout='small', orthogonal_actions=True, one_shot=True, battery=False, render_mode=None):
         layout = parse_map_from_file(layout)
         if orthogonal_actions:
-            from marp.marp_orth import MARPOrth
-            self.world = MARPOrth(N, layout, one_shot, render_mode=render_mode)
+            if one_shot:
+                from marp.mapf import MAPF
+                self.world = MAPF(N, layout, render_mode=render_mode)
+            else:
+                if not battery:
+                    from marp.mapd import MAPD
+                    self.world = MAPD(N, layout, render_mode=render_mode)
+                else:
+                    from marp.warehouse import Warehouse
+                    self.world = Warehouse(N, layout, render_mode=render_mode)
         else:
             from marp.marp_spin import MARPSpin
             self.world = MARPSpin(N, layout, one_shot)

@@ -13,14 +13,6 @@ ORTH_ACTIONS = [
 ]
 
 
-REWARDS = {
-    'illegal': -10000,
-    'normal': -1,
-    'collision': -1000,
-    'goal': 10000
-}
-
-
 def move(loc, action):
     if action == 'stop' or action == 0:
         return tuple(loc)
@@ -66,23 +58,29 @@ def check_collision(prev_locations, curr_locations):
     return collisions
 
 
-class MARPOrth(object):
-    def __init__(self, N, layout, one_shot=True, obs_fn=None, render_mode='human'):
+STARTS = [(4, 1), (1, 4), (1, 6)]
+GOALS = [(2, 3), (6, 1), (6, 4)]
+REWARDS = {
+    'illegal': -10000,
+    'normal': -1,
+    'collision': -1000,
+    'goal': 10000
+}
+
+
+class MAPF():
+    def __init__(self, N, layout,
+                 starts=STARTS, goals=GOALS, rewards=REWARDS,
+                 obs_fn=None, render_mode='human'):
         self.N = N
         self.agents = []
         self.A = ORTH_ACTIONS
 
         self.layout = layout
-        self.starts = [(4, 1), (1, 4), (1, 6)]
-        if one_shot:
-            self.goals = [(2, 3), (6, 1), (6, 4)]
-        else:
-            self.goals = [
-                [(6, 6), (6, 1)],
-                [(3, 4), (4, 3)],
-                [(2, 1), (1, 4)],
-            ]
-        self.MAX_NUM_STEP = np.product(layout.shape) * len(self.goals)
+        self.starts = starts
+        self.goals = goals
+        self.REWARDS = REWARDS
+        self.MAX_NUM_STEP = np.product(layout.shape)
 
         self.obs_fn = obs_fn  # (state, agent_i) -> obs_i
         self.render_mode = render_mode
@@ -111,7 +109,7 @@ class MARPOrth(object):
             observations[agent] = self.obs_fn(self.starts, agent)
             infos[agent] = {
                 'action_mask': get_avai_actions(self.starts[i], self.layout)[1],
-                'collide_with': [],
+                'collide_with': [],  # TODO: no collision check initially
             }
 
         self.locations = self.starts
@@ -127,15 +125,15 @@ class MARPOrth(object):
 
     def _step(self, actions):
         succ_locations = []
-        rewards = {agent: REWARDS['normal'] for agent in self.agents}
+        rewards = {agent: self.REWARDS['normal'] for agent in self.agents}
         for i, agent in enumerate(self.agents):
             _a = actions[agent]
             if self.terminations[agent]:
                 _a = 'stop'
-                rewards[agent] = REWARDS['goal']
+                rewards[agent] = self.REWARDS['goal']
             elif not self.info_n[agent]['action_mask'][_a]:
                 _a = 'stop'
-                rewards[agent] = REWARDS['illegal']
+                rewards[agent] = self.REWARDS['illegal']
             succ_locations.append(move(self.locations[i], _a))
 
         collisions = check_collision(self.locations, succ_locations)
@@ -147,7 +145,8 @@ class MARPOrth(object):
         for i, agent in enumerate(self.agents):
             c_i = collisions[i]
             if c_i and not self.terminations[agent]:
-                rewards[agent] = REWARDS['collision']
+                # TODO: incur collision penalty even if the goal is reached in this step
+                rewards[agent] = self.REWARDS['collision']
             observations[agent] = self.obs_fn(succ_locations, agent)
             infos[agent] = {
                 'action_mask': get_avai_actions(succ_locations[i], self.layout)[1],
@@ -159,7 +158,7 @@ class MARPOrth(object):
         for i, agent in enumerate(self.agents):
             if not self.terminations[agent] and self.locations[i] == self.goals[i]:
                 self.terminations[agent] = True
-                rewards[agent] = REWARDS['goal']
+                rewards[agent] = self.REWARDS['goal']
         terminations = deepcopy(self.terminations)
 
         self.step_cnt += 1
@@ -222,13 +221,13 @@ class MARPOrth(object):
                 _a = 'stop'
             succ_locations.append(move(locations[i], _a))
 
-        is_legal = True
+        collision_free = True
         succ_infos = {}
         collisions = check_collision(locations, succ_locations)
         for i, agent in enumerate(self.agents):
             c_i = collisions[i]
             if c_i:
-                is_legal = False
+                collision_free = False
             succ_infos[agent] = {
                 'action_mask': get_avai_actions(succ_locations[i], self.layout)[1],
                 'collide_with': c_i,
@@ -240,7 +239,7 @@ class MARPOrth(object):
             'goals': state['goals'],
         }
 
-        return succ_state, is_legal
+        return succ_state, collision_free
 
     def _is_goal_state(self, state):
         ret = []
