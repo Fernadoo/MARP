@@ -57,7 +57,10 @@ API
    :caption: API 
 
    marp.ma_env
-   marp.marp_orth
-   marp.marp_spin
+   marp.mapf
+   marp.mapd
+   marp.warehouse
+   marp.rl
    marp.search
+   marp.animator
    marp.utils

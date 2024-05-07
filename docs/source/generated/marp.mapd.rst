@@ -1,7 +1,7 @@
-﻿marp.marp\_spin
-===============
+﻿marp.mapd
+=========
 
-.. automodule:: marp.marp_spin
+.. automodule:: marp.mapd
 
    
    
@@ -17,7 +17,7 @@
 
    .. autosummary::
    
-      MARPSpin
+      MAPD
    
    
 

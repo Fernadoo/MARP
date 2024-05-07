@@ -1,7 +1,7 @@
-﻿marp.marp\_orth
-===============
+﻿marp.mapf
+=========
 
-.. automodule:: marp.marp_orth
+.. automodule:: marp.mapf
 
    
    
@@ -25,7 +25,7 @@
 
    .. autosummary::
    
-      MARPOrth
+      MAPF
    
    
 

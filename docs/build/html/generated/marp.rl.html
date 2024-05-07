@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="marp.animator" href="marp.animator.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="marp.search" href="marp.search.html" /><link rel="prev" title="marp.warehouse" href="marp.warehouse.html" />
 
     <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>marp.utils - MARP 0.1 documentation</title>
+        <title>marp.rl - MARP 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -234,10 +234,10 @@
 <li class="toctree-l1"><a class="reference internal" href="marp.mapf.html">marp.mapf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="marp.mapd.html">marp.mapd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="marp.warehouse.html">marp.warehouse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="marp.rl.html">marp.rl</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">marp.rl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="marp.search.html">marp.search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="marp.animator.html">marp.animator</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">marp.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="marp.utils.html">marp.utils</a></li>
 </ul>
 
 </div>
@@ -258,7 +258,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/generated/marp.utils.rst.txt" title="View this page">
+  <a class="muted-link" href="../_sources/generated/marp.rl.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -278,14 +278,33 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-marp.utils">
-<span id="marp-utils"></span><h1>marp.utils<a class="headerlink" href="#module-marp.utils" title="Link to this heading">¶</a></h1>
+          <section id="module-marp.rl">
+<span id="marp-rl"></span><h1>marp.rl<a class="headerlink" href="#module-marp.rl" title="Link to this heading">¶</a></h1>
 <p class="rubric">Functions</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_map_from_file</span></code>(map_config)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiAgentIndividualLearningWrapper</span></code>(ma_env)</p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../rl_algo.html#marp.rl.Qlearning" title="marp.rl.Qlearning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Qlearning</span></code></a>(env[, num_it, epsilon, alpha, gamma])</p></td>
+<td><p>Tabular Q learning</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../rl_algo.html#marp.rl.individualQlearning" title="marp.rl.individualQlearning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">individualQlearning</span></code></a>(env[, num_it, epsilon, ...])</p></td>
+<td><p>Tabular Q learning for multiple individual learners</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Classes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../rl_algo.html#marp.rl.MultiAgentJointLearningWrapper" title="marp.rl.MultiAgentJointLearningWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiAgentJointLearningWrapper</span></code></a>(ma_env)</p></td>
+<td><p>Formulate a multi-agent joint learning problem</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../rl_algo.html#marp.rl.SingleAgentLearningWrapper" title="marp.rl.SingleAgentLearningWrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleAgentLearningWrapper</span></code></a>(ma_env, agent)</p></td>
+<td><p>Formulate a single agent learning problem</p></td>
 </tr>
 </tbody>
 </table>
@@ -297,15 +316,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="marp.animator.html">
+          <a class="next-page" href="marp.search.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">marp.search</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="marp.warehouse.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">marp.animator</div>
+                <div class="title">marp.warehouse</div>
                 
               </div>
             </a>

@@ -24,6 +24,8 @@
    .. autosummary::
    
       MultiAgentSearchWrapper
+      SingleAgentLifelongSearchWrapper
+      SingleAgentRechargeLifelongSearchWrapper
       SingleAgentSearchWrapper
    
    
