@@ -88,6 +88,20 @@ class SingleAgentLifelongSearchWrapper(SingleAgentSearchWrapper):
         return dist
 
 
+class SingleAgentRechargeLifelongSearchWrapper(SingleAgentLifelongSearchWrapper):
+
+    def transit(self, state, action):
+        succ_state, cost = super().transit(state, action)
+        succ_battery = succ_state['batteries'][self.agent]
+        succ_loc = succ_state['locations'][self.i]
+        next_goal_idx = succ_state['next_goals'][self.agent]
+        next_goal = succ_state['goals'][self.i][next_goal_idx]
+        euc_dist = np.sqrt(np.sum(np.square(np.array(succ_loc) - np.array(next_goal))))
+        if succ_battery < euc_dist:
+            cost = 99999
+        return succ_state, cost
+
+
 class MultiAgentSearchWrapper():
     """
     Given a MARP environment, wrap it as a multi-agent joint search problem.
@@ -183,7 +197,7 @@ def astar(env):
         for a in env.A:
             succ_state, cost = env.transit(curr_state, a)
             heu = env.heuristic(succ_state)
-            if heu > 9999:
+            if heu > 9999 or cost > 9999:
                 continue
             tie_break_noise = random.uniform(0, 1e-2)
             succ_node = Node(heu + g + cost, g + cost + tie_break_noise, a, succ_state)

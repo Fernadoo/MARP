@@ -20,7 +20,7 @@ REWARDS = {
     'goal': 10000
 }
 BATTERY = 15
-CONTINGENCY = 0.1
+CONTINGENCY = 0.0
 
 
 class Warehouse(MAPD):
@@ -33,18 +33,18 @@ class Warehouse(MAPD):
         super().__init__(N, layout,
                          starts, goals, rewards,
                          obs_fn, render_mode)
-        self.MAX_NUM_STEP = 20
-        self.battery = battery
+        self.MAX_NUM_STEP = 30
+        self.full_battery = battery
         self.contingency_rate = contingency_rate
 
     def _reset(self, seed=None, options=None):
         observations, infos = super()._reset(seed, options)
-        self.batteries = {agent: self.battery for agent in self.agents}
+        self.batteries = {agent: self.full_battery for agent in self.agents}
         for agent in self.agents:
-            infos[agent]['battery'] = self.battery
+            infos[agent]['battery'] = self.full_battery
         self.history = {
             'paths': [self.starts],
-            'batteries': [tuple(self.battery for agent in self.agents)]
+            'batteries': [tuple(self.full_battery for agent in self.agents)]
         }
         return observations, infos
 
@@ -67,8 +67,12 @@ class Warehouse(MAPD):
             elif not self.info_n[agent]['action_mask'][_a]:
                 _a = 'stop'
                 rewards[agent] = self.REWARDS['illegal']
-            succ_locations.append(move(self.locations[i], _a))
+            succ_loc = move(self.locations[i], _a)
+            succ_locations.append(succ_loc)
             self.batteries[agent] -= 1
+
+            if self.layout[succ_loc] == 8:
+                self.batteries[agent] = self.full_battery
 
         collisions = check_collision(self.locations, succ_locations)
         self.locations = succ_locations
@@ -171,6 +175,9 @@ class Warehouse(MAPD):
             if succ_loc == goals[i][next_goals[agent]]:
                 succ_next_goals[agent] = min(next_goals[agent] + 1, len(goals[i]) - 1)
             succ_locations.append(move(locations[i], _a))
+
+            if self.layout[succ_loc] == 8:
+                succ_batteries[agent] = self.full_battery
 
         collision_free = True
         succ_infos = {}

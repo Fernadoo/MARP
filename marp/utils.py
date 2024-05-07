@@ -3,6 +3,11 @@ import os
 import numpy as np
 
 
+CELL = 0
+BLOCK = 1
+BATTERY = 8
+
+
 def parse_map_from_file(map_config):
     PREFIX = 'marp/layouts/'
     POSTFIX = '.map'
@@ -18,9 +23,11 @@ def parse_map_from_file(map_config):
                 row = []
                 for char in line:
                     if char == '.':
-                        row.append(0)
+                        row.append(CELL)
                     elif char == '@':
-                        row.append(1)
+                        row.append(BLOCK)
+                    elif char == 'B':
+                        row.append(BATTERY)
                     else:
                         continue
                 layout.append(row)

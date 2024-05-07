@@ -226,7 +226,7 @@ class StreamAnimation(Animation):
         )
         for i in range(len(self.my_map)):
             for j in range(len(self.my_map[0])):
-                if self.my_map[i][j]:
+                if self.my_map[i][j] == 1:
                     self.patches.append(
                         Rectangle((i - 0.5, j - 0.5),
                                   1, 1,
@@ -342,6 +342,17 @@ class WarehouseAnimation(StreamAnimation):
                                                 verticalalignment='center',
                                                 fontsize='x-small')
             self.artists.append(self.battery_text[i])
+
+        # add charging station
+        for i in range(len(self.my_map)):
+            for j in range(len(self.my_map[0])):
+                if self.my_map[i, j] == 8:
+                    self.patches.append(Rectangle((i, j - 0.5 / np.sqrt(2)),
+                                                  0.5, 0.5,
+                                                  facecolor='springgreen',
+                                                  edgecolor='black',
+                                                  alpha=0.5,
+                                                  angle=45))
 
     def animate_func(self, t):
         out_of_bat = {agent: False for agent in self.agents}
