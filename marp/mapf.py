@@ -3,6 +3,7 @@ from copy import deepcopy
 import numpy as np
 from gymnasium import spaces
 
+from marp.utils import Marker
 
 ORTH_ACTIONS = [
     0,  # stop
@@ -35,7 +36,7 @@ def get_avai_actions(loc, layout):
         succ_loc = move(loc, a)
         if succ_loc[0] not in range(nrows) or succ_loc[1] not in range(ncols):
             continue  # go outside the map
-        elif layout[succ_loc] == 1:
+        elif layout[succ_loc] in Marker.INACCESSIBLE:
             continue  # hit an obstacle
         else:
             avai_actions.append(a)
@@ -302,7 +303,7 @@ def r_get_avai_actions(loc_drct, layout):
         succ_loc, succ_drct = r_move(loc_drct, a)
         if succ_loc[0] not in range(nrows) or succ_loc[1] not in range(ncols):
             continue  # go outside the map
-        elif layout[succ_loc] == 1:
+        elif layout[succ_loc] in Marker.INACCESSIBLE:
             continue  # hit an obstacle
         else:
             avai_actions.append(a)

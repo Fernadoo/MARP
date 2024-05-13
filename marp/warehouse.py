@@ -4,8 +4,9 @@ from copy import deepcopy
 import numpy as np
 
 from marp.mapf import move, get_avai_actions, check_collision
-from marp.mapf import MAPF_R, r_move, r_get_avai_actions
+from marp.mapf import r_move, r_get_avai_actions
 from marp.mapd import MAPD, MAPD_R
+from marp.utils import Marker
 
 
 STARTS = [(4, 1), (1, 4), (1, 6)]
@@ -37,7 +38,7 @@ class Warehouse(MAPD):
         self.MAX_NUM_STEP = 45
         self.full_battery = battery
         self.contingency_rate = contingency_rate
-        self.stations = np.array(np.where(self.layout == 8)).T
+        self.stations = np.array(np.where(self.layout == Marker.BATTERY)).T
 
     def _reset(self, seed=None, options=None):
         observations, infos = super()._reset(seed, options)
@@ -73,7 +74,7 @@ class Warehouse(MAPD):
             succ_locations.append(succ_loc)
             self.batteries[agent] -= 1
 
-            if self.layout[succ_loc] == 8:
+            if self.layout[succ_loc] == Marker.BATTERY:
                 self.batteries[agent] = self.full_battery
 
         collisions = check_collision(self.locations, succ_locations)
@@ -120,6 +121,12 @@ class Warehouse(MAPD):
     def _render(self):
         if self.render_mode == 'human':
             from marp.animator import WarehouseAnimation
+            if max(self.layout.shape) in range(10):
+                FPS = 60
+            elif max(self.layout.shape) in range(10, 15):
+                FPS = 30
+            elif max(self.layout.shape) >= 15:
+                FPS = 15
             self.animator = WarehouseAnimation(
                 range(self.N),
                 self.layout,
@@ -127,7 +134,7 @@ class Warehouse(MAPD):
                 self.goals,
                 self.history['paths'],
                 self.history['batteries'],
-                FPS=60
+                FPS
             )
             self.animator.show()
         else:
@@ -169,7 +176,7 @@ class Warehouse(MAPD):
                 succ_next_goals[agent] = min(next_goals[agent] + 1, len(goals[i]) - 1)
             succ_locations.append(move(locations[i], _a))
 
-            if self.layout[succ_loc] == 8:
+            if self.layout[succ_loc] == Marker.BATTERY:
                 succ_batteries[agent] = self.full_battery
 
         collision_free = True
@@ -209,7 +216,7 @@ class Warehouse_R(MAPD_R):
         self.MAX_NUM_STEP = 45
         self.full_battery = battery
         self.contingency_rate = contingency_rate
-        self.stations = np.array(np.where(self.layout == 8)).T
+        self.stations = np.array(np.where(self.layout == Marker.BATTERY)).T
 
     def _reset(self, seed=None, options=None):
         observations, infos = super()._reset(seed, options)
@@ -244,7 +251,7 @@ class Warehouse_R(MAPD_R):
             succ_directions.append(succ_drct)
             self.batteries[agent] -= 1
 
-            if self.layout[succ_loc] == 8:
+            if self.layout[succ_loc] == Marker.BATTERY:
                 self.batteries[agent] = self.full_battery
 
         collisions = check_collision(self.locations, succ_locations)
@@ -294,6 +301,12 @@ class Warehouse_R(MAPD_R):
     def _render(self):
         if self.render_mode == 'human':
             from marp.animator import WarehouseAnimation_R
+            if max(self.layout.shape) in range(10):
+                FPS = 60
+            elif max(self.layout.shape) in range(10, 15):
+                FPS = 30
+            elif max(self.layout.shape) >= 15:
+                FPS = 15
             self.animator = WarehouseAnimation_R(
                 range(self.N),
                 self.layout,
@@ -302,7 +315,7 @@ class Warehouse_R(MAPD_R):
                 self.history['paths'],
                 self.history['directions'],
                 self.history['batteries'],
-                FPS=60
+                FPS
             )
             self.animator.show()
         else:
@@ -348,7 +361,7 @@ class Warehouse_R(MAPD_R):
             succ_locations.append(succ_loc)
             succ_directions.append(succ_drct)
 
-            if self.layout[succ_loc] == 8:
+            if self.layout[succ_loc] == Marker.BATTERY:
                 succ_batteries[agent] = self.full_battery
 
         collision_free = True

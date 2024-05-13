@@ -19,7 +19,9 @@ class MARP(ParallelEnv):
         "name": "multiagent_route_planning_v0",
     }
 
-    def __init__(self, N=2, layout='small', orthogonal_actions=True, one_shot=True, battery=False, render_mode=None):
+    def __init__(self, N, layout,
+                 orthogonal_actions=True, one_shot=True, battery=False, render_mode=None,
+                 **kwargs):
         layout = parse_map_from_file(layout)
         if orthogonal_actions:
             if one_shot:
@@ -31,7 +33,10 @@ class MARP(ParallelEnv):
                     self.world = MAPD(N, layout, render_mode=render_mode)
                 else:
                     from marp.warehouse import Warehouse
-                    self.world = Warehouse(N, layout, render_mode=render_mode)
+                    self.world = Warehouse(N, layout,
+                                           starts=kwargs['starts'],
+                                           goals=kwargs['goals'],
+                                           render_mode=render_mode)
         else:
             if one_shot:
                 from marp.mapf import MAPF_R
@@ -42,7 +47,10 @@ class MARP(ParallelEnv):
                     self.world = MAPD_R(N, layout, render_mode=render_mode)
                 else:
                     from marp.warehouse import Warehouse_R
-                    self.world = Warehouse_R(N, layout, render_mode=render_mode)
+                    self.world = Warehouse_R(N, layout,
+                                             starts=kwargs['starts'],
+                                             goals=kwargs['goals'],
+                                             render_mode=render_mode)
 
     def reset(self, seed=None, options=None):
         """

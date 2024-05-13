@@ -7,6 +7,7 @@ import matplotlib.colors as mcolors
 import numpy as np
 from matplotlib import animation
 from copy import deepcopy
+from marp.utils import Marker
 
 
 # Colors = ['green', 'blue', 'orange']
@@ -60,7 +61,7 @@ class Animation:
         )
         for i in range(len(self.my_map)):
             for j in range(len(self.my_map[0])):
-                if self.my_map[i][j]:
+                if self.my_map[i][j] in Marker.INACCESSIBLE:
                     self.patches.append(
                         Rectangle((i - 0.5, j - 0.5),
                                   1, 1,
@@ -229,7 +230,7 @@ class Animation_R(Animation):
         )
         for i in range(len(self.my_map)):
             for j in range(len(self.my_map[0])):
-                if self.my_map[i][j]:
+                if self.my_map[i][j] in Marker.INACCESSIBLE:
                     self.patches.append(
                         Rectangle((i - 0.5, j - 0.5),
                                   1, 1,
@@ -390,7 +391,7 @@ class StreamAnimation(Animation):
         )
         for i in range(len(self.my_map)):
             for j in range(len(self.my_map[0])):
-                if self.my_map[i][j] == 1:
+                if self.my_map[i][j] in Marker.INACCESSIBLE:
                     self.patches.append(
                         Rectangle((i - 0.5, j - 0.5),
                                   1, 1,
@@ -582,16 +583,32 @@ class WarehouseAnimation(StreamAnimation):
                                                 fontsize='x-small')
             self.artists.append(self.battery_text[i])
 
+        for i in range(len(agents)):
+            if max(my_map.shape) in range(10, 15):
+                fontsize = 10
+            if max(my_map.shape) >= 15:
+                fontsize = 8
+            self.agent_names[i].set(fontsize=fontsize)
+
         # add charging station
         for i in range(len(self.my_map)):
             for j in range(len(self.my_map[0])):
-                if self.my_map[i, j] == 8:
+                if self.my_map[i, j] == Marker.BATTERY:
                     self.patches.append(Rectangle((i, j - 0.5 / np.sqrt(2)),
                                                   0.5, 0.5,
                                                   facecolor='springgreen',
                                                   edgecolor='black',
                                                   alpha=0.5,
                                                   angle=45))
+                elif self.my_map[i, j] == Marker.IMPORT:
+                    self.patches.append(Circle((i, j),
+                                               0.15,
+                                               facecolor='tomato'))
+
+                elif self.my_map[i, j] == Marker.EXPORT:
+                    self.patches.append(Circle((i, j),
+                                               0.15,
+                                               facecolor='palegreen'))
 
     def animate_func(self, t):
         out_of_bat = {agent: False for agent in self.agents}
@@ -656,7 +673,7 @@ class WarehouseAnimation_R(WarehouseAnimation):
         for i in range(len(self.paths)):
             self.agent_heads[i] = Circle((self.starts[i][0] + self.size * np.cos(self.directions[i][0]),
                                           self.starts[i][1] + self.size * np.sin(self.directions[i][0])),
-                                         0.05,
+                                         0.1,
                                          facecolor='black')
             self.patches.append(self.agent_heads[i])
 
