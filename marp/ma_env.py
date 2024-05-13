@@ -33,8 +33,16 @@ class MARP(ParallelEnv):
                     from marp.warehouse import Warehouse
                     self.world = Warehouse(N, layout, render_mode=render_mode)
         else:
-            from marp.marp_spin import MARPSpin
-            self.world = MARPSpin(N, layout, one_shot)
+            if one_shot:
+                from marp.mapf import MAPF_R
+                self.world = MAPF_R(N, layout, render_mode=render_mode)
+            else:
+                if not battery:
+                    from marp.mapd import MAPD_R
+                    self.world = MAPD_R(N, layout, render_mode=render_mode)
+                else:
+                    from marp.warehouse import Warehouse_R
+                    self.world = Warehouse_R(N, layout, render_mode=render_mode)
 
     def reset(self, seed=None, options=None):
         """

@@ -83,7 +83,7 @@ class SingleAgentLifelongSearchWrapper(SingleAgentSearchWrapper):
         dist = 0
         for g in range(next_goal_index, len(state['goals'][self.i])):
             goal = state['goals'][self.i][g]
-            dist += np.sqrt(np.sum(np.square(np.array(loc) - np.array(goal))))
+            dist += np.sum(np.abs(np.array(loc) - np.array(goal)))
             loc = goal
         return dist
 
@@ -93,11 +93,7 @@ class SingleAgentRechargeLifelongSearchWrapper(SingleAgentLifelongSearchWrapper)
     def transit(self, state, action):
         succ_state, cost = super().transit(state, action)
         succ_battery = succ_state['batteries'][self.agent]
-        succ_loc = succ_state['locations'][self.i]
-        next_goal_idx = succ_state['next_goals'][self.agent]
-        next_goal = succ_state['goals'][self.i][next_goal_idx]
-        euc_dist = np.sqrt(np.sum(np.square(np.array(succ_loc) - np.array(next_goal))))
-        if succ_battery < euc_dist:
+        if succ_battery <= 0:
             cost = 99999
         return succ_state, cost
 
@@ -141,6 +137,8 @@ class MultiAgentSearchWrapper():
         :rtype: (dict, cost)
         """
         raw_state, is_legal = state
+        if not is_legal:
+            return self.ma_env.transit(raw_state, actions), 99999
         goal_reached = self.ma_env.is_goal_state(raw_state)
         cost = 0
         for reached in goal_reached:
@@ -176,6 +174,87 @@ class MultiAgentSearchWrapper():
         loc = raw_state['locations']
         goal = raw_state['goals']
         return np.sum(np.sqrt(np.sum(np.square(np.array(loc) - np.array(goal)), axis=1)))
+
+
+class MultiAgentLifelongSearchWrapper(MultiAgentSearchWrapper):
+    """docstring for MultiAgentLifelongSearchWrapper"""
+
+    def heuristic(self, state):
+        raw_state, is_legal = state
+        if not is_legal:
+            return 99999
+        dist = 0
+        for i, agent in enumerate(self.agents):
+            loc = raw_state['locations'][i]
+            next_goal_index = raw_state['next_goals'][agent]
+            for g in range(next_goal_index, len(raw_state['goals'][i])):
+                goal = raw_state['goals'][i][g]
+                dist += np.sum(np.abs(np.array(loc) - np.array(goal)))
+                loc = goal
+        return dist
+
+
+class MultiAgentRechargeLifelongSearchWrapper(MultiAgentLifelongSearchWrapper):
+    """docstring for MultiAgentRechargeLifelongSearchWrapper"""
+
+    def transit(self, state, actions):
+        succ_state, cost = super().transit(state, actions)
+        raw_succ_state, is_legal = succ_state
+        for i, agent in enumerate(self.agents):
+            succ_battery = raw_succ_state['batteries'][agent]
+            if succ_battery <= 0:
+                cost = 99999
+                break
+        return succ_state, cost
+
+    def heuristic(self, state):
+        raw_state, is_legal = state
+        if not is_legal:
+            return 99999
+        # print(raw_state)
+        stations = raw_state['stations']
+
+        def min_dist_to_station(pos):
+            dists = np.sum(np.abs(np.array(pos) - stations), axis=1)
+            return np.min(dists), np.argmin(dists)
+
+        totoal_dist = 0
+        for i, agent in enumerate(self.agents):
+            battery = raw_state['batteries'][agent]
+            loc = raw_state['locations'][i]
+            next_goal_idx = raw_state['next_goals'][agent]
+            next_goal = raw_state['goals'][i][next_goal_idx]
+            rest_goals = np.array(raw_state['goals'][i][next_goal_idx + 1:])  # could be empty
+
+            dist_curr_pos2next_goal = np.sum(np.abs(np.array(loc) - np.array(next_goal)))
+            dist_next_goal2end_goal = np.sum(np.abs(rest_goals[1:] - rest_goals[:-1]))
+            min_station_dist, min_station_id = min_dist_to_station(loc)
+
+            if battery < dist_curr_pos2next_goal + dist_next_goal2end_goal:
+                if battery < min_station_dist:
+                    return 99999
+                min_station = stations[min_station_id]
+                dist_station2next_goal = np.sum(np.abs(min_station - np.array(next_goal)))
+                totoal_dist += min_station_dist + dist_station2next_goal + dist_next_goal2end_goal
+            else:
+                totoal_dist += dist_curr_pos2next_goal + dist_next_goal2end_goal
+
+        return totoal_dist
+
+
+    # def transit(self, state, actions):
+    #     succ_state, cost = super().transit(state, actions)
+    #     raw_succ_state, is_legal = succ_state
+    #     for i, agent in enumerate(self.agents):
+    #         succ_battery = raw_succ_state['batteries'][agent]
+    #         succ_loc = raw_succ_state['locations'][i]
+    #         next_goal_idx = raw_succ_state['next_goals'][agent]
+    #         next_goal = raw_succ_state['goals'][i][next_goal_idx]
+    #         euc_dist = np.sqrt(np.sum(np.square(np.array(succ_loc) - np.array(next_goal))))
+    #         if succ_battery < euc_dist:
+    #             cost = 99999
+    #             break
+    #     return succ_state, cost
 
 
 def astar(env):
